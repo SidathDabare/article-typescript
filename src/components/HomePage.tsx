@@ -1,28 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Container, Row } from 'react-bootstrap'
+import IArticleInterface from '../typings/ArticleInterface'
+import Article from './Article'
 
-export interface IHomePageProps { }
 
+const HomePage = () => {
+    const [articles, setArticles] = useState<IArticleInterface[]>([])
+    useEffect(() => {
+        fetchData()
+    }, [])
 
-const HomePage: React.FunctionComponent<IHomePageProps> = (props) => {
-
-    const fetchData =async () => {
+    const fetchData = async () => {
         try {
             const response = await fetch("https://api.spaceflightnewsapi.net/v3/articles")
             if (response.ok) {
-                let article = await response.json()
-                console.log(article);
+                let data = await response.json()
+                setArticles(data)
+                console.log(data);
             }
-            
+
         } catch (error) {
             console.log(error)
         }
     }
-    useEffect(() => {
-        fetchData()
-    })
-  return (
-    <div>Home Page</div>
-  );
+
+    return (
+        <Container>
+            <h1 className='my-3'> Spaceflight news</h1>
+            <Row className='p-0 mx-0'>
+                {articles.map((article, i) => (<  Article article={article} key={i} />)
+
+                )}
+            </Row>
+        </Container>
+    );
 }
 
 export default HomePage;

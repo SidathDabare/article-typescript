@@ -8,13 +8,13 @@ import DetailsPage from './components/DetailsPage';
 export interface IAppProps { }
 
 
-const  App:React.FunctionComponent<IAppProps>=(props)=> {
+const App = () => {
   return (
-      <BrowserRouter>
+    <BrowserRouter>
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/detailspage:id' element={<DetailsPage />} />
-   
+        <Route path='/:id' element={<DetailsPage />} />
+
       </Routes>
     </BrowserRouter>
   );
